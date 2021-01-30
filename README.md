@@ -1,2 +1,2 @@
 # AWS-developer
-AWS-developer certification course
+AWS Cloud Professional
