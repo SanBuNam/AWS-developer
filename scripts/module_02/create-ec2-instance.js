@@ -79,7 +79,17 @@ function createSecurityGroup (sgName) {
 }
 
 function createKeyPair (keyName) {
-  // TODO: Create keypair
+  // Create keypair
+  const params = {
+    KeyName: keyName
+  }
+
+  return new Promise((resolve, reject) => {
+    ec2.createKeyPair(params, (err, data) => {
+      if (err) reject(err)
+      else resolve(data)
+    })
+  })
 }
 
 function createInstance (sgName, keyName) {
