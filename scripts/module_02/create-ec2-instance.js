@@ -1,11 +1,13 @@
-// Imports
-// TODO: Import the aws-sdk
+// Import the aws-sdk
+const AWS = require('aws-sdk')
 const helpers = require('./helpers')
 
-// TODO: Configure region
+// Configure region
+AWS.config.update({ region : 'us-east-1' })
 
 // Declare local variables
-// TODO: Create an ec2 object
+// Create an ec2 object
+const ec2 = new AWS.EC2()
 const sgName = 'hamster_sg'
 const keyName = 'hamster_key'
 
@@ -28,7 +30,52 @@ createSecurityGroup(sgName)
 // Create functions
 
 function createSecurityGroup (sgName) {
-  // TODO: Implement sg creation & setting SSH rule
+  // Implement sg creation & setting SSH rule
+  const params = {
+    Description: sgName,
+    GroupName: sgName
+  }
+
+  return new Promise((resolve, reject) => {
+    ec2.createSecurityGroup(params, (err, data) => {
+      if (err) reject(err)
+      else {
+        const params = {
+          GroupId: data.GroupId,
+          IpPermissions: [
+            {
+              IpProtocol: 'tcp',
+              // 22 for both port since we're allowing SSH
+              FromPort: 22,
+              ToPort: 22,
+              IpRanges: [
+                {
+                  CidrIp: '0.0.0.0/0'
+                }
+              ]
+            },
+            {
+              IpProtocol: 'tcp',
+              FromPort: 3000,
+              ToPort: 3000,
+              IpRanges: [
+                {
+                  CidrIp: '0.0.0.0/0'
+                }
+              ]
+            }
+          ]
+        }
+
+        ec2.authorizeSecurityGroupIngress(params, (err) => {
+          if (err) reject(err)
+          else resolve()
+        })
+      }
+    })
+
+  })
+
 }
 
 function createKeyPair (keyName) {
