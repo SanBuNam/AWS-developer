@@ -1,5 +1,5 @@
 {
-  "name": "hbfl",
+  "name": "aws-developer-certificate-training",
   "version": "2.0.0",
   "description": "",
   "main": "index.js",
@@ -10,8 +10,8 @@
     "start": "forever stopall && forever start index.js",
     "deploy": "node deploy.js"
   },
-  "author": "Ryan Lewis <ryan@ryanhlewis.com>",
-  "license": "MIT",
+  "author": "David Lee",
+  "license": "na",
   "dependencies": {
     "@hapi/boom": "8.0.1",
     "@hapi/catbox": "10.2.3",
