@@ -34,7 +34,7 @@ function terminateInstance (instanceId) {
   })
 }
 
-// listInstances()
-// .then(data => console.log(data))
-terminateInstance('i-0733b5248eeb48563')
+listInstances()
 .then(data => console.log(data))
+// terminateInstance('i-0733b5248eeb48563')
+// .then(data => console.log(data))
