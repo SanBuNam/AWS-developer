@@ -5,13 +5,17 @@ const helpers = require('./helpers')
 AWS.config.update({ region: '/* TODO: Add your region */' })
 
 // Declare local variables
-// TODO: Create a new ELBv2 object
+// Create a new ELBv2 object
+const elbv2 = new AWS.ELBv2()
+
 const sgName = 'hamsterELBSG'
 const tgName = 'hamsterTG'
 const elbName = 'hamsterELB'
 const vpcId = '/* TODO: Add your VPC Id */'
 const subnets = [
   /* TODO: Add two subnets */
+  'subnet-b4be98sample',
+  'subnet-b4be9sample2'
 ]
 
 helpers.createSecurityGroup(sgName, 80)
@@ -30,7 +34,21 @@ helpers.createSecurityGroup(sgName, 80)
 .then((data) => console.log(data))
 
 function createLoadBalancer (lbName, sgId) {
-  // TODO: Create a load balancer
+  // Create a load balancer
+  const params = {
+    Name: lbName,
+    Subnets: subnets,
+    SecurityGroups: [
+      sgid
+    ]
+  }
+
+  return new Promise((resolve, reject) => {
+    elbv2.createListener(params, (err, data) => {
+      if (err) reject(err)
+      else resolve(data)
+    })
+  })
 }
 
 function createTargetGroup (tgName) {
