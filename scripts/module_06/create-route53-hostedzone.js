@@ -1,9 +1,6 @@
-// Imports
 const AWS = require('aws-sdk')
-
 AWS.config.update({ region: 'us-west-2' })
 
-// Declare local variables
 // Create route53 object
 const route53 =  new AWS.Route53()
 const hzName = 'hbfl.online'
