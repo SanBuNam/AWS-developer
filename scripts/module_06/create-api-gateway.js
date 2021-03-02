@@ -60,6 +60,12 @@ function createResource (parentResourceId, resourcePath, api) {
     restApiId: api.id
   }
 
+  if (path) {
+    params.requestParameters = {
+      [`method.request.path.${path}`]: true
+    }
+  }
+
   return new Promise((resolve, reject) => {
     // Create the resource and return the resource id
     apiG.createResource(params, (err, data) => {
@@ -96,6 +102,13 @@ function createMethodIntegration (resourceId, method, api, path) {
     uri: 'http://hamsterELB-1470466383.us-east-1.elb.amazonaws.com'
   }
 
+  if (path) {
+    params.uri += `/{${path}}`
+    params.requestParameters = {
+      [`integration.request.path.${path}`]: `method.request.path.${path}`
+    }
+  }
+
   return new Promise((resolve, reject) => {
     // Put the integration and return the resourceId argument
     apiG.putIntegration(params, (err) => {
@@ -104,3 +117,4 @@ function createMethodIntegration (resourceId, method, api, path) {
     })
   })
 }
+
