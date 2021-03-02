@@ -70,17 +70,37 @@ function createResource (parentResourceId, resourcePath, api) {
 }
 
 function createResourceMethod (resourceId, method, api, path) {
-  // TODO: Create params const
+  const params = {
+    authorizationType: 'NONE',
+    httpMethod: method,
+    resourceId: resourceId,
+    restApiId: api.id
+  }
 
   return new Promise((resolve, reject) => {
-    // TODO: Put the method and return the resourceId argument
+    // Put the method and return the resourceId argument
+    apiG.putMethod(params, (err) => {
+      if (err) reject(err)
+      else resolve(resourceId)
+    })
   })
 }
 
 function createMethodIntegration (resourceId, method, api, path) {
-  // TODO: Create params const
+  const params = {
+    httpMethod: method,
+    resourceId: resourceId,
+    restApiId: api.id,
+    integrationHttpMethod: method,
+    type: 'HTTP_PROXY',
+    uri: 'http://hamsterELB-1470466383.us-east-1.elb.amazonaws.com'
+  }
 
   return new Promise((resolve, reject) => {
-    // TODO: Put the integration and return the resourceId argument
+    // Put the integration and return the resourceId argument
+    apiG.putIntegration(params, (err) => {
+      if (err) reject(err)
+      else resolve(resourceId)
+    })
   })
 }
